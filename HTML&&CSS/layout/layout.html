@@ -9,6 +9,9 @@
             padding: 0;
             margin: 0;
         }
+        .layout {
+            margin-top: 20px;
+        }
         .layout article div {
             min-height: 300px;
         }
@@ -39,10 +42,157 @@
             </div>
         </article>
     </section>
+
+
+    <section class="layout absoulte">
+        <style>
+            .layout.absoulte .left-center-right >div {
+                position: absolute;
+            }
+            .layout.absoulte .left {
+                width: 300px;
+                left: 0;
+                background-color: darkgoldenrod;
+            }
+            .layout.absoulte .center {
+                right: 300px;
+                left: 300px;
+                background-color: rgb(233, 218, 15);
+            }
+            .layout.absoulte .right {
+                width: 300px;
+                right: 0;
+                background-color: darkseagreen;
+            }
+        </style>
+        <article class="left-center-right">
+            <div class="left"></div>
+            <div class="center">
+                <h1>这是绝对定位解决方案</h1>
+                    1.这是三栏布局的中间部分
+                    2.这是三栏布局的中间部分
+            </div>
+            <div class="right"></div>
+        </article>
+    </section>
+
+    <section class="layout flexbox">
+        <style>
+            .layout.flexbox {
+                margin-top: 340px;
+            }
+            .layout.flexbox .left-center-right {
+                display: flex;
+            }
+            .layout.flexbox .left {
+                width: 300px;
+                background-color: deeppink;
+            }
+            .layout.flexbox .center {
+                flex: 1;
+                background-color: dodgerblue;
+            }
+            .layout.flexbox .right {
+                width: 300px;
+                background-color: gold;
+            }
+        </style>
+        <article class="left-center-right">
+            <div class="left"></div>
+            <div class="center">
+                <h1>这是flexbox解决方案</h1>
+                    1.这是三栏布局的中间部分
+                    2.这是三栏布局的中间部分                
+            </div>
+            <div class="right"></div>
+        </article>
+    </section>
+
+    <section class="layout table">
+        <style>
+            .layout.table .left-center-right {
+                width: 100%;
+                height: 100px;
+                display: table;
+            }
+            .layout.table .left-center-right>div {
+                display: table-cell;
+            }
+            .layout.table .left {
+                width: 300px;
+                background-color: greenyellow;
+            }
+            .layout.table .center {
+                background-color: indigo;
+            }
+            .layout.table .right {
+                width: 300px;
+                background-color: indianred;
+            }
+        </style>
+        <article class="left-center-right">
+            <div class="left"></div>
+            <div class="center">
+                <h1>这是表格布局解决方案</h1>
+                    1.这是三栏布局的中间部分
+                    2.这是三栏布局的中间部分                 
+            </div>
+            <div class="right"></div>
+        </article>
+    </section>
+
+
+    <section class="layout grid">
+        <style>
+            .layout.grid .left-center-right {
+                display: grid;
+                width: 100%;
+                grid-template-rows: 100px;
+                grid-template-columns: 300px auto 300px;
+            }
+            .layout.grid .left {
+                background-color: khaki;
+            }
+            .layout.grid .center {
+                background-color: lawngreen;
+            }
+            .layout.grid .right {
+                background-color: lightblue;
+            }
+        </style>
+        <article class="left-center-right">
+            <div class="left"></div>
+            <div class="center">
+                <h1>这是网格布局解决方案</h1>
+                    1.这是三栏布局的中间部分
+                    2.这是三栏布局的中间部分
+            </div>
+            <div class="right"></div>
+        </article>
+    </section>
 </body>
 </html>
 <!--
     浮动解决方案需要注意的点：
     1.左右div然后才是中间div...不然中间的会盖住右边的；
     2.如果中间的文字是用div套起来会导致中间盒子偏高；原因是h1占据了上面一行的高度，子div是在其下面！
+    3.顺便说一下，右拉满会把中间完全覆盖然后中间又全出来了。。。  
+    
+    绝对定位需要注意的点：
+    1.左中右div；
+    2.>是选择第一代子元素;
+    3.关键就是中间距离左右300px；
+
+    flexbox需要注意的点：
+    1.因为绝对定位的关系我们的flexbox会占据第二种解决方案的位置，所以加了上边距（也就是说浮动并没有脱离文档流...？）；
+    2.父盒子flex布局，中间盒子加一个flex：1就行；
+
+    table布局需要注意的点：
+    1.整体需要设置宽高！同时也需要设置display为table，而其子元素则需要设置display为table-cell，宽度看需要；
+
+    grid布局需要注意的点：
+    1.整体需要设置宽度；
+    2.每个盒子的高度是设置网格的行高；
+    3.需要多少个格子是设置每一列的宽度，设置多少个就多少个盒子；
+    4.自动撑开就auto；
 -->
