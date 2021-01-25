@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面布局（高度已知，三栏布局，左右宽300px，中间自适应）</title>
+    <style>
+        html * {
+            padding: 0;
+            margin: 0;
+        }
+        .layout article div {
+            min-height: 300px;
+        }
+        .layout.float .left {
+            float: left;
+            width: 300px;
+            background-color: cadetblue;
+        }
+        .layout.float .right {
+            float: right;
+            width: 300px;
+            background-color: cornflowerblue;
+        }
+        .layout.float .center {
+            background-color: darkcyan;
+        }
+    </style>
+</head>
+<body>
+    <section class="layout float">
+        <article class="left-right-center">
+            <div class="left"></div>
+            <div class="right"></div>
+            <div class="center">
+                <h1>这是浮动解决方案</h1>
+                    1.这是三栏布局的中间部分
+                    2.这是三栏布局的中间部分
+            </div>
+        </article>
+    </section>
+</body>
+</html>
+<!--
+    浮动解决方案需要注意的点：
+    1.左右div然后才是中间div...不然中间的会盖住右边的；
+    2.如果中间的文字是用div套起来会导致中间盒子偏高；原因是h1占据了上面一行的高度，子div是在其下面！
+-->
