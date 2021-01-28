@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原型链</title>
+</head>
+<body>
+    <script>
+        // 创建对象的几种方式：
+        // 1. 字面量
+        const o1 = {name: 'o1'}
+        const o2 = new Object({name: '02'})
+        // 2. 构造函数
+        const fn = function(name) {this.name = name}
+        o3 = new fn('o3')
+        // 3. 对象的API
+        const p = {name: 'o4'}
+        const o4 = Object.create(p)
+
+        // 原型链：
+        fn.prototype.say = function() {
+            console.log('say')
+        }
+        const o5 = new fn('o5')
+
+        // 模拟new的原理及过程:
+        const new2 = function(func) { // 接收一个构造函数
+            let o = Object.create(func.prototype) // new的时候一开始是先创建一个空对象，且指向构造函数的原型对象
+            let k = func.call(o) // 执行构造函数同时改变this的指向，让其指向新创建的空对象
+            if (typeof k === 'object') { // 如果返回的是对象，那么就不管前面的一切，直接返回构造函数返回的对象
+                return k
+            } else { // 否则就返回新创建的对象
+                return o
+            }
+        }
+    </script>
+</body>
+</html>
