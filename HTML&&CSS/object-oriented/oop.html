@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面向对象</title>
+</head>
+<body>
+    <script>
+        // 类的声明与实例化：
+        function Animal1 () {
+            this.name = 'dog'
+        }
+        class Animal2 {
+            constructor (name) {
+                this.name = name
+            }
+        }
+        console.log(new Animal1, new Animal2('cat')) // 不需要接收参数的时可以不用（）
+
+
+        // 类的继承
+        // 1. 构造函数继承
+        function parent1 () {
+            this.name = 'p1'
+        }
+        function child1 () {
+            parent1.call(this)
+            this.type = 'c1'
+        }
+        console.log(new parent1, new child1())
+
+        // 2. 原型链继承
+        function parent2 () {
+            this.name = 'p2'
+            this.play = [1, 2, 3]
+        }
+        parent2.prototype.test = [1, 2]
+        function child2 () {
+            this.type = 'c2'
+        }
+        child2.prototype = new parent2() 
+/* 因为实例都是从child2中拿到，而实例本身无prototype中的值，只能往上也就是__proto__查找也就是到child.prototype，在这里拿到对应的值，也就是说
+本来就只有一个地方存了值，每个人都是上来这个地方找值，如果有人修改了这个值，那么别人来的话也会是修改后的值，因为实例存的只是索引！而且这种像是
+一开始就绑定这个child了，并没有重新new*/
+        console.log(new parent2(), new child2())
+
+        // 3. 组合继承  就是把父类的拷贝一份到子类，同时也拷贝一份到prototype，这样子我如果修改的不是prototype上的就可以避免改一变多！
+        function parent3 () {
+            this.name = 'p3'
+            this.play = [1, 2, 3]
+        }
+        parent3.prototype.test = [1, 2]
+        function child3 () {
+            parent3.call(this)
+            this.type = 'c3'
+        }
+        child3.prototype = new parent3()
+
+        // 4. 组合方式优化1
+        function parent4 () {
+            this.name = 'p4'
+        }
+        function  child4 () {
+            parent4.call(this)
+            this.type = 'c4'
+        }
+        child4.prototype = parent4.prototype
+
+        // 5. 组合方式优化2
+        function parent5 () {
+            this.name = 'p5'
+        }
+        function child5 () {
+            parent5.call(this)
+            this.type = 'c5'
+        }
+        child5.prototype = Object.create(parent5.prototype)
+        child5.prototype.constructor = child5
+    </script>
+</body>
+</html>
