@@ -106,6 +106,7 @@ class MVue { // 实现一个大类（外面new的类）
         this.$data = options.data;
         this.$options = options; // 赋值
         if (this.$el) { // 判断是存在el节点就去实现编译类和observer类
+            new observer(this.$data);
             new compile(this.$el, this); // 传入节点和Vue实例
         }
     }
