@@ -4,23 +4,40 @@ const compileUtil = { // 辅助编译
             return data[currentVal];
         }, vm.$data)
     },
+    getContentVal (expr, vm) { // 获取{{}}外的第一个值如{{person.name}} - {{person.age}}则是person.name
+        return expr.replace(/\{\{(.+?)\}\}/g, (...args) => {
+            return this.getVal(args[1], vm);
+        })
+    },
     text (node, expr, vm) {
         let value;
         if (expr.indexOf('{{') !== -1) { // 处理{{}}
             value = expr.replace(/\{\{(.+?)\}\}/g, (...args) => {
+                new watcher(vm, args[1], () => { // 也就是说这里其实不需要newval，因为更新的时候我相当于自己去获取新值在这里
+                    this.updater.textUpdater(node, this.getContentVal(expr, vm));
+                })
                 return this.getVal(args[1], vm);
             })
         } else {
             value = this.getVal(expr, vm); // 处理v-text
+            new watcher(vm, expr, (newval) => { // 拿到接回来的新值触发更新
+                this.updater.textUpdater(node, newval);
+            })
         }
         this.updater.textUpdater(node, value); // 在上面不同情况拿到值后直接更新视图即可
     },
     html (node, expr, vm) {
         const value = this.getVal(expr, vm);
+        new watcher(vm, expr, (newval) => {
+            this.updater.htmlUpdater(node, newval);
+        })
         this.updater.htmlUpdater(node, value);
     },
     model (node, expr, vm) {
         const value = this.getVal(expr, vm);
+        new watcher(vm, expr, (newval) => {
+            this.updater.modelUpdater(node, newval);
+        })
         this.updater.modelUpdater(node, value);
     },
     on (node, expr, vm, eventName) {
