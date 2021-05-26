@@ -20,6 +20,8 @@
         <h3>{{msg}}</h3>
         <div v-text='msg'></div>
         <input type="text" v-model='msg'>
+        <button v-on:click='handleClick'>按钮1</button>
+        <button @click="handleClick">按钮2</button>
     </div>
     <!--
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
