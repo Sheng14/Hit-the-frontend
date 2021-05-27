@@ -4,6 +4,11 @@ const compileUtil = { // 辅助编译
             return data[currentVal];
         }, vm.$data)
     },
+    setVal (expr, vm, inputVal) { // 设置输入框输入的值
+        return expr.split('.').reduce((data, currentVal) => {
+            return data[currentVal] = inputVal; // 给老值赋值输入框的值
+        }, vm.$data)
+    },
     getContentVal (expr, vm) { // 获取{{}}外的第一个值如{{person.name}} - {{person.age}}则是person.name
         return expr.replace(/\{\{(.+?)\}\}/g, (...args) => {
             return this.getVal(args[1], vm);
@@ -35,8 +40,11 @@ const compileUtil = { // 辅助编译
     },
     model (node, expr, vm) {
         const value = this.getVal(expr, vm);
-        new watcher(vm, expr, (newval) => {
+        new watcher(vm, expr, (newval) => { // 数据更改视图
             this.updater.modelUpdater(node, newval);
+        })
+        node.addEventListener('input', (e) => { //视图更改数据
+            this.setVal(expr, vm, e.target.value);
         })
         this.updater.modelUpdater(node, value);
     },
@@ -125,6 +133,19 @@ class MVue { // 实现一个大类（外面new的类）
         if (this.$el) { // 判断是存在el节点就去实现编译类和observer类
             new observer(this.$data);
             new compile(this.$el, this); // 传入节点和Vue实例
+            this.proxyData(this.$data); // 做一层代理可以直接访问data里面的属性而不需要经过data
+        }
+    }
+    proxyData(data) {
+        for(const key in data) {
+            Object.defineProperty(this, key, {
+                get() {
+                    return data[key];
+                },
+                set(newVal) {
+                    data[key] = newval;
+                }
+            })
         }
     }
 }
