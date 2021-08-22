@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .singleText {
+            width: 200px;
+            height: 50px;
+            background-color: aquamarine;
+            animation: move 4s ease 0.5s infinite;
+           /* animation: name duration timing-function delay iteration-count direction fill-mode;*/
+        }
+        .singleText p {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .multipleText1, .multipleText2 {
+            width: 200px;
+            height: 50px;
+            background-color: cadetblue;
+            margin-top: 200px;
+        }
+        .multipleText1 p {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+        .multipleText2 p {
+            position:relative;
+            line-height:1.4em;
+            /* 2 times the line-height to show 2 lines */
+            height:2.8em;
+            overflow:hidden;
+        }
+        .multipleText2 p::after {
+            content:"...";
+            font-weight:bold;
+            position:absolute;
+            bottom:0;
+            right:0;
+            padding:0 20px 1px 45px;
+            background-color: cornsilk;
+        }
+        @keyframes move {
+            0% {
+                width: 200px;
+            }
+            50% {
+                width: 500px;
+            }
+            100% {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="singleText">
+            <p>单行文本溢出单行文本溢出单行文本溢出单行文本溢出单行文本溢出单行文本溢出单行文本溢出</p>
+        </div>
+        <div class="multipleText1">
+            <p>多行文本溢出多行文本溢出多行文本溢出多行文本溢出多行文本溢出多行文本溢出多行文本溢出</p>
+        </div>
+        <div class="multipleText2">
+            <p>多行文本溢出多行文本溢出多行文本溢出多行文本溢出多行文本溢出多行文本溢出多行文本溢出</p>
+        </div>
+    </div>
+</body>
+</html>
