@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            width: 400px;
+            height: 800px;
+            position: relative;
+            background-color: rgb(188, 214, 163);
+        }
+        .box1 { /*水平居中 当元素的布局方式为 static/relative 且宽高已知时，auto 取父元素剩余空间的宽度*/
+            width: 200px;
+            height: 200px;
+            background-color: burlywood;
+            margin: 0 auto; /*目前父容器的宽度为400，子元素200，那么水平margin取剩下的就是200，分两半就是左右margin各100*/
+        }
+        .box2 {
+            position: fixed; /*无法水平居中 当元素的布局方式为 postion/absolute/fixed 或者 float/inline 或者宽高未知时，auto 就取0*/
+            width: 200px;
+            height: 200px;
+            background-color: chartreuse;
+            margin: 0 auto; /*左右margin为0，所以没有居中效果，贴贴*/
+        }
+        .box3 {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: coral;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box1"></div>
+        <div class="box2"></div>
+        <div class="box3"></div>
+    </div>
+</body>
+</html>
