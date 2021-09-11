@@ -1,11 +1,11 @@
 /**
  * @description 手写promise.all方法
- * @author 参考：https://juejin.cn/post/6962019510526148615
+ * @author 参考：https://juejin.cn/post/6962019510526148615以及https://www.sogou.com/link?url=hedJjaC291OfPyaFZYFLI4KQWvqt63NBkv5ouqTGdbwBGQBaZ_yYVA..
  */
 // 使用场景：当用户想要得到的是多个异步结果合并到一起时应该使用all
 // 如果值为空数组：返回的Promise会进入fullfilled的状态,那么会执行resolve的回调，返回的参数为一个空数组
 
-
+// 初版
 function all(arr) {
     return new Promise((resolve, reject) => {
         let len = arr.length;
@@ -17,6 +17,28 @@ function all(arr) {
                 count++;
                 if (count === len) {
                     resolve(result);
+                }
+            }).catch((err) => {
+                reject(err);
+            })
+        }
+    })
+}
+
+// 高手版（按顺序）
+function all(arr) {
+    return new Promise((resolve, reject) => {
+        const PromiseResult = [];
+        let iteratorIndex = 0; // 第几个promise了，主要用于在结果中占据正确位置
+        let fullCount = 0; // 已完成数量
+        for(let item of arr) {
+            let resultIndex = iteratorIndex;
+            iteratorIndex++; // 拿到结果位置
+            Promise.resolve(item).then((res) => {
+                fullCount++; // 完成数量+1
+                PromiseResult[resultIndex] = res; // 在正确位置赋值
+                if (fullCount === iteratorIndex) { // 完成
+                    resolve(PromiseResult);
                 }
             }).catch((err) => {
                 reject(err);
